@@ -33,9 +33,9 @@ body {
   }
 
   &:focus, &:hover, &:active {
-    border-color: $body-bg;
-    background: darken($body-bg, 10%);
-    color: #FFF;
+    border-color: $body-bg !important;
+    background: darken($body-bg, 10%) !important;
+    color: #FFF !important;
   }
 }
 
