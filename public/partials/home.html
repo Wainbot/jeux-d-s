@@ -1,0 +1,117 @@
+<div class="container-fluid" data-ng-controller="HomeCtrl">
+    <div class="row">
+        <!-- STATUS PLAYERS -->
+        <div class="col-sm-12" data-ng-if="manager.status === 'players'">
+            <div class="panel">
+                <div class="panel-heading text-center">Ajoutez des joueurs</div>
+                <div class="panel-body text-center">
+                    <input type="text" data-ng-model="joueur">
+                    <br/>
+                    <br/>
+                    <button class="btn btn-default btn-lg" data-ng-disabled="!joueur" data-ng-click="addPlayer(joueur); joueur = '';">Ajouter</button>
+                    <button class="btn btn-default btn-lg" data-ng-click="chooseGame();" data-ng-disabled="manager.players.length < 2">Suivant</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12" data-ng-if="manager.status === 'players'">
+            <div class="panel">
+                <div class="panel-heading text-center">Joueurs</div>
+                <div class="panel-body text-center">
+                    <table width="100%">
+                        <tr data-ng-if="manager.players.length > 0" data-ng-repeat="player in manager.players">
+                            <td width="50%" style="text-align: right;">Joueur n°{{$index+1}} :</td>
+                            <td width="50%" style="text-align: left;">
+                                {{player.name}}
+                                <button class="btn btn-des pull-right" data-ng-click="deletePlayer(player)">
+                                    <span style="color: #c0392b;">X</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr data-ng-if="manager.players.length == 0">
+                            <td colspan="2" class="text-center">Il n'y a pas encore de joueur</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--/STATUS PLAYERS -->
+
+        <!-- STATUS GAME -->
+        <div class="col-sm-12" data-ng-if="manager.status === 'game'">
+            <div class="panel">
+                <div class="panel-heading text-center">Choisissez un jeu</div>
+                <div class="panel-body text-center">
+                    <button class="btn btn-lg btn-default btn-block" data-ng-click="gameChoice('10000')">On veut jouer au 10000 !</button>
+                    <button class="btn btn-lg btn-default btn-block" data-ng-click="gameChoice('25')">On veut jouer au 25 !</button>
+                    <button class="btn btn-lg btn-default btn-block" data-ng-click="gameChoice()">On ne sait pas... Choisis pour nous !</button>
+                </div>
+            </div>
+        </div>
+        <!--/STATUS GAME -->
+
+        <!-- STATUS FIRST -->
+        <div class="col-sm-12" data-ng-if="manager.status === 'first'">
+            <div class="panel">
+                <div class="panel-heading text-center">Qui joue en premier ?</div>
+                <div class="panel-body text-center" style="padding: 0;">
+                    <table width="100%">
+                        <tr data-ng-repeat="player in manager.players">
+                            <td>
+                                <button class="btn btn-default btn-block" data-ng-click="chooseFirstPlayer(player.name)">{{player.name}}</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--/STATUS FIRST -->
+
+        <!-- STATUS PLAY -->
+        <div class="col-sm-12" data-ng-if="manager.status === 'play'">
+            <div class="panel" data-ng-if="!endGame">
+                <div class="panel-heading text-center">À {{manager.game.player}} de jouer !</div>
+                <div data-ng-if="manager.game.name == '25'" class="panel-body text-center">
+                    <button data-ng-repeat="result in resultatsPossibles25() track by $index" data-ng-click="jouer(result)" class="btn btn-default btn-lg btn-des">{{result}}</button>
+                </div>
+                <div data-ng-if="manager.game.name == '25' && attaque" class="panel-body text-center">
+                    Attaque
+                    <br />
+                    <button data-ng-repeat="result in getNumber(10) track by $index" data-ng-click="jouer(result, (($index+1)*attaque))" class="btn btn-default btn-lg btn-des">{{-(($index+1)*attaque)}}</button>
+                    <button data-ng-click="jouer(result, 0)" class="btn btn-default btn-lg btn-des">Pas de chance !</button>
+                </div>
+                <div class="panel-body text-center" data-ng-if="manager.game.name == '10000'">
+                    <label for="score10000">Score : </label>
+                    <input type="number" id="score10000" data-ng-model="score10000">
+                    &nbsp;
+                    <button class="btn btn-default btn-lg" data-ng-click="jouer(score10000); score10000 = '';">OK</button>
+                    <br />
+                    <br />
+                    <button class="btn btn-default btn-lg" data-ng-click="jouer(0); score10000 = '';">Rien du tout !</button>
+                </div>
+            </div>
+            <div class="panel" data-ng-if="endGame">
+                <div class="panel-body text-center">
+                    La partie est terminée !
+                    <br />
+                    <br />
+                    <button data-ng-click="rejouer()" class="btn btn-default btn-lg">Rejouer</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12" data-ng-if="manager.status === 'play'">
+            <div class="panel">
+                <div class="panel-body text-center" style="padding: 0;">
+                    <table width="100%" class="table-responsive table-bordered table-score">
+                        <tr>
+                            <th data-ng-class="{'current-player': player.name == manager.game.player}" data-ng-repeat="player in manager.players">{{player.name}}</th>
+                        </tr>
+                        <tr data-ng-repeat="round in getNumber(manager.game.round) track by $index">
+                            <td data-ng-repeat="player in manager.players track by $index" data-ng-class="{'current-player': player.name == manager.game.player}">{{player.rounds[$parent.$index].score+"" || ""}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--/STATUS PLAY -->
+    </div>
+</div>

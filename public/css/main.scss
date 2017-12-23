@@ -1,0 +1,99 @@
+$body-bg: #2980b9;
+$font-family-base: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$headings-font-weight: 600;
+$navbar-height: 90px;
+$navbar-default-bg: #f6f6f6;
+$navbar-default-border: transparent;
+$navbar-default-color: #4B4B4B;
+
+@import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CRaleway:100,300,600,700,800");
+@import "vendor/bootstrap";
+
+body {
+  padding-top: 15px;
+}
+
+.btn {
+  font-weight: 600;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:focus {
+    outline: 0 !important;
+  }
+}
+
+.btn-default {
+  border-color: $body-bg;
+  background: $body-bg;
+  color: #FFF;
+
+  &.btn-des {
+    margin: 5px;
+  }
+
+  &:focus, &:hover, &:active {
+    border-color: $body-bg;
+    background: darken($body-bg, 10%);
+    color: #FFF;
+  }
+}
+
+input {
+  border: 2px solid #EEE;
+  padding: 10px;
+  font-size: 1.5em;
+  color: #4B4B4B;
+  border-radius: 3px;
+  background-color: #F8F8F8;
+
+  &:focus, &:hover, &:active {
+    border-color: $body-bg;
+  }
+}
+
+.panel {
+  .panel-heading {
+    font-size: 2em;
+  }
+  .panel-body {
+    font-size: 1.5em;
+  }
+}
+
+table {
+  tr {
+    td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #EEE;
+
+      &.current-player {
+        color: transparentize($body-bg, 0.5);
+      }
+    }
+
+    th {
+      padding: 10px;
+      text-align: center;
+      background-color: #F8F8F8;
+
+      &.current-player {
+        background-color: transparentize($body-bg, 0.5);
+      }
+    }
+  }
+}
+
+.table-score {
+  padding: 0;
+  margin: 0;
+  border: 0;
+
+  th {
+    font-size: 0.7em !important;
+  }
+  td {
+    font-size: 0.6em !important;
+  }
+}
