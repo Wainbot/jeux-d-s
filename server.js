@@ -6,19 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var dotenv = require('dotenv');
-var mongoose = require('mongoose');
 var sass = require('node-sass-middleware');
 
 // Load environment variables from .env file
 dotenv.load();
 
 var app = express();
-
-mongoose.connect(process.env.MONGODB);
-mongoose.connection.on('error', function() {
-  console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
-  process.exit(1);
-});
 
 app.set('port', process.env.PORT || 3000);
 app.use(compression());
