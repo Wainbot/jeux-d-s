@@ -105,8 +105,8 @@
                         <tr>
                             <th data-ng-class="{'current-player': player.name == manager.game.player}" data-ng-repeat="player in manager.players">{{player.name}}</th>
                         </tr>
-                        <tr data-ng-repeat="round in getNumber(manager.game.round) track by $index">
-                            <td data-ng-repeat="player in manager.players track by $index" data-ng-class="{'current-player': player.name == manager.game.player}">{{player.rounds[$parent.$index].score+"" || ""}}</td>
+                        <tr data-ng-repeat="round in getNumber(manager.game.round, manager.game.name === '10000') track by $index">
+                            <td data-ng-repeat="player in manager.players track by $index" data-ng-class="{'current-player': player.name == manager.game.player}">{{player.rounds[round].score+"" || ""}}</td>
                         </tr>
                     </table>
                 </div>

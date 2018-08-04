@@ -66,8 +66,21 @@ angular.module('MyApp')
             console.log($scope.manager);
         };
 
-        $scope.getNumber = function (num) {
-            return new Array(num);
+        $scope.getNumber = function (num, reverse) {
+            // return new Array(num);
+            var start = 0;
+            var end = num;
+            var numbers = Array(end - start)
+                .fill()
+                .map(function (item, index) {
+                    return start + index
+                });
+
+            if (reverse) {
+                return numbers.reverse();
+            } else {
+                return numbers;
+            }
         };
 
         $scope.resultatsPossibles25 = function () {
